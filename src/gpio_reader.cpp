@@ -1,5 +1,5 @@
 /**
- * @file gpio_reading_taker.cpp
+ * @file gpio_reader.cpp
  *
  * @brief ROS2 Talker to read inputted digital signals.
  *
@@ -7,6 +7,8 @@
 #include <chrono>
 #include <memory>
 #include <thread>
+#include <sstream>
+#include <iomanip>
 
 #include <pigpiod_if2.h>
 #include "rclcpp/rclcpp.hpp"
@@ -36,10 +38,17 @@ public:
       : Node("gpio_publisher"), count_(0)
   {
     this->declare_parameter<int>("pin", 23);
-    this->declare_parameter<bool>("is_pull_up", false);
+    this->declare_parameter<bool>("is_pull_up", true);
     this->get_parameter("pin", pin_);
     this->get_parameter("is_pull_up", is_pull_up_);
-    RCLCPP_INFO(this->get_logger(), "GPIO Read: pin %02d", pin_);
+    if (is_pull_up_)
+    {
+      RCLCPP_INFO(this->get_logger(), "Read GPIO-%02d (PULL_UP)", pin_);
+    }
+    else
+    {
+      RCLCPP_INFO(this->get_logger(), "Read GPIO-%02d (PULL_DOWN)", pin_);
+    }
     pi_ = pigpio_start(NULL, NULL); /* Connect to Pi. */
     if (pi_ < 0)
     {
@@ -56,8 +65,9 @@ public:
       {
         set_pull_up_down(pi_, pin_, PI_PUD_OFF);
       }
-
-      publisher_ = this->create_publisher<std_msgs::msg::Bool>("topic", 10);
+      std::stringstream ss;
+      ss << "gpio_input_" << std::setw(2) << pin_;
+      publisher_ = this->create_publisher<std_msgs::msg::Bool>(ss.str(), 10);
       timer_ = this->create_wall_timer(
           500ms, std::bind(&DigitalReader::timer_callback, this));
     }
