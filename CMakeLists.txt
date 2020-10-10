@@ -39,10 +39,16 @@ add_executable(gpio_reader src/gpio_reader.cpp)
 target_link_libraries(gpio_reader pigpiod_if2)
 ament_target_dependencies(gpio_reader rclcpp std_msgs)
 
+# gpio_writer
+add_executable(gpio_writer src/gpio_writer.cpp)
+target_link_libraries(gpio_writer pigpiod_if2)
+ament_target_dependencies(gpio_writer rclcpp std_msgs)
+
 
 
 install(TARGETS
   gpio_reader
+  gpio_writer
   DESTINATION lib/${PROJECT_NAME})
 
 
