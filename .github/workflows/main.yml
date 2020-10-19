@@ -14,8 +14,15 @@ jobs:
             OPT_VI: "-vi",
             CATKIN_LINT_ARGS: "--ignore unknown_package"}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      # install pigpio
+      - run: wget https://github.com/joan2937/pigpio/archive/master.zip
+      - run: unzip master.zip
+      - run: cd pigpio-master
+      - run: make
+      - run: sudo make install
+      - run: cd ..
       - uses: 'ros-industrial/industrial_ci@master'
         env: ${{matrix.env}}
