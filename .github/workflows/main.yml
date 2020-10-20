@@ -28,9 +28,7 @@ jobs:
           sudo make install
           # sudo ./x_pigpio # check C I/F
           cd ..
-      - name: test pigpiod
-        run: |
-          sudo pigpiod
-          sudo killall pigpiod
+      - name: echo include path
+        run: gcc -xc++ -E -v -
       - uses: 'ros-industrial/industrial_ci@master'
         env: ${{matrix.env}}
