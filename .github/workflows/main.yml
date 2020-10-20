@@ -17,13 +17,20 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: install pigpio
+      - name: download and unpack pigpio
         run: |
           wget https://github.com/joan2937/pigpio/archive/master.zip
           unzip master.zip
+      - name: make and install pigpio
+        run: |
           cd pigpio-master
           make
           sudo make install
+          sudo ./x_pigpio # check C I/F
           cd ..
+      - name: test pigpiod
+        run: |
+          sudo pigpiod
+          sudo killall pigpiod
       - uses: 'ros-industrial/industrial_ci@master'
         env: ${{matrix.env}}
