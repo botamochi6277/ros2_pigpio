@@ -1,0 +1,34 @@
+  
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  industrial_ci:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: "foxy",
+            ROS_REPO: "main",
+            CATKIN_LINT: "true",
+            OPT_VI: "-vi",
+            CATKIN_LINT_ARGS: "--ignore unknown_package"}
+
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: download and unpack pigpio
+        run: |
+          wget https://github.com/joan2937/pigpio/archive/master.zip
+          unzip master.zip
+      - name: make and install pigpio
+        run: |
+          cd pigpio-master
+          make
+          sudo make install
+          # sudo ./x_pigpio # check C I/F
+          cd ..
+      - name: echo include path
+        run: gcc -xc++ -E -v -
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}
