@@ -44,11 +44,16 @@ add_executable(gpio_writer src/gpio_writer.cpp)
 target_link_libraries(gpio_writer pigpiod_if2)
 ament_target_dependencies(gpio_writer rclcpp std_msgs)
 
+# gpio_pwm_writer
+add_executable(gpio_pwm_writer src/gpio_pwm_writer.cpp)
+target_link_libraries(gpio_pwm_writer pigpiod_if2)
+ament_target_dependencies(gpio_pwm_writer rclcpp std_msgs)
 
-
+# Install built nodes
 install(TARGETS
   gpio_reader
   gpio_writer
+  gpio_pwm_writer
   DESTINATION lib/${PROJECT_NAME})
 
 
