@@ -30,12 +30,12 @@ ros2 run ros2_pigpio gpio_writer --ros-args --param pin:=21
 
 Write high signal:
 ```
-ros2 topic pub --once gpio_output_21 std_msgs/msg/Bool "{data:{true}}"
+ros2 topic pub --once gpio_output_21 std_msgs/msg/Bool '{data: true}'
 ```
 
 Write low signal:
 ```
-ros2 topic pub --once gpio_output_21 std_msgs/msg/Bool "{data:{}}"
+ros2 topic pub --once gpio_output_21 std_msgs/msg/Bool '{data: false}'
 ```
 
 ## Write PWM Signals
