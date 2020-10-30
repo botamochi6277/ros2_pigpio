@@ -47,6 +47,8 @@ public:
     else
     {
       RCLCPP_ERROR(this->get_logger(), "cannot connect pigpiod");
+      rclcpp::shutdown();
+      exit(1);
     }
   }
   ~PWMWriter()

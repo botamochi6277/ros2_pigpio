@@ -53,6 +53,8 @@ public:
     if (pi_ < 0)
     {
       RCLCPP_ERROR(this->get_logger(), "cannot connect pigpiod");
+      rclcpp::shutdown();
+      exit(1);
     }
     else
     {
