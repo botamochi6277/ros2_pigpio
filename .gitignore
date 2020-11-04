@@ -23,7 +23,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -316,3 +317,4 @@ CATKIN_IGNORE
 !.vscode/extensions.json
 
 
+.vscode/settings.json
