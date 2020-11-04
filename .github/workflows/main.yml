@@ -26,11 +26,10 @@ jobs:
           unzip master.zip
       - name: make and install pigpio
         run: |
-          cd pigpio-master
           make
           sudo make install
           # sudo ./x_pigpio # check C I/F
-          cd ..
+          working_directory: pigpio-master
       - name: echo include path
         run: gcc -xc++ -E -v -
       - uses: 'ros-industrial/industrial_ci@master'
