@@ -100,7 +100,7 @@ public:
    * add const for ros2 callback
    * @param power power (duty ratio) of a motor (-255 -- 255)
    */
-  void drive(int power)
+  void drive(int power) const
   {
     switch (type_)
     {

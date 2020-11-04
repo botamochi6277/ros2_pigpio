@@ -52,3 +52,42 @@ Write 128 (50%) pwm signal:
 ```
 ros2 topic pub --once gpio_pwm_18 std_msgs/msg/Int16 '{data: 128}'
 ```
+
+
+## Drive Wheels with DC-Motors (H-Bridge)
+
+You can control DC motors with H-Bridge motor drivers.
+
+To control the driver, run `wheels`.
+```
+ros2 run ros2_pigpio wheels 
+```
+
+`wheels` uses [Maker Drive](https://www.cytron.io/p-maker-drive-simplifying-h-bridge-motor-driver-for-beginner) and  GPIO-17, 18 and GPIO-27, 22 for Motor1 and 2, respectively in default settings.
+
+You can drive wheels with publishing `/wheels` (topic).
+
+Move Forward: 
+```
+ros2 topic pub --once /wheels geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 1.0, y: 0.0, z: 0}}"
+```
+
+Move Backward
+```
+ros2 topic pub --once /wheels geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 1.0, y: 0.0, z: 0}}"
+```
+
+Turn Left
+```
+ros2 topic pub --once /wheels geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.0}}"
+```
+
+Turn Right
+```
+ros2 topic pub --once /wheels geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -1.0}}"
+```
+
+Stop
+```
+ros2 topic pub --once /wheels geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+```

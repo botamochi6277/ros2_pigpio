@@ -114,10 +114,10 @@ public:
                             "Left Motor 2 : IN2A=%02d, IN2B=%02d",
                             pin_in2a, pin_in2b, pin_pwm2);
             }
-            std::stringstream ss;
-            ss << "wheels_" << std::setw(2) << 1;
+            // std::stringstream ss;
+            // ss << "wheels_" << std::setw(2) << 1;
             subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
-                ss.str(), 10, std::bind(&WheelsWriter::topic_callback, this, _1));
+                "wheels", 10, std::bind(&WheelsWriter::topic_callback, this, _1));
         }
         else
         {
