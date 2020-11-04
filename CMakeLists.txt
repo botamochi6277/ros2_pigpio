@@ -19,6 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -55,7 +56,12 @@ ament_target_dependencies(gpio_pwm_writer rclcpp std_msgs)
 # wheels
 add_executable(wheels src/wheels.cpp)
 target_link_libraries(wheels pigpiod_if2)
-ament_target_dependencies(wheels rclcpp std_msgs)
+ament_target_dependencies(wheels rclcpp std_msgs geometry_msgs)
+
+# subclass test
+add_executable(subclass src/subclass.cpp)
+target_link_libraries(subclass pigpiod_if2)
+ament_target_dependencies(subclass rclcpp std_msgs)
 
 
 # Install built nodes
@@ -64,6 +70,7 @@ install(TARGETS
   gpio_writer
   gpio_pwm_writer
   wheels
+  subclass
   DESTINATION lib/${PROJECT_NAME})
 
 
