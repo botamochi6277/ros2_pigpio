@@ -19,6 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -33,6 +34,9 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+# Add include directories
+include_directories(include ./include)
 
 # gpio_reader
 add_executable(gpio_reader src/gpio_reader.cpp)
@@ -49,11 +53,17 @@ add_executable(gpio_pwm_writer src/gpio_pwm_writer.cpp)
 target_link_libraries(gpio_pwm_writer pigpiod_if2)
 ament_target_dependencies(gpio_pwm_writer rclcpp std_msgs)
 
+# wheels
+add_executable(wheels src/wheels.cpp)
+target_link_libraries(wheels pigpiod_if2)
+ament_target_dependencies(wheels rclcpp std_msgs geometry_msgs)
+
 # Install built nodes
 install(TARGETS
   gpio_reader
   gpio_writer
   gpio_pwm_writer
+  wheels
   DESTINATION lib/${PROJECT_NAME})
 
 
