@@ -58,19 +58,12 @@ add_executable(wheels src/wheels.cpp)
 target_link_libraries(wheels pigpiod_if2)
 ament_target_dependencies(wheels rclcpp std_msgs geometry_msgs)
 
-# subclass test
-add_executable(subclass src/subclass.cpp)
-target_link_libraries(subclass pigpiod_if2)
-ament_target_dependencies(subclass rclcpp std_msgs)
-
-
 # Install built nodes
 install(TARGETS
   gpio_reader
   gpio_writer
   gpio_pwm_writer
   wheels
-  subclass
   DESTINATION lib/${PROJECT_NAME})
 
 
