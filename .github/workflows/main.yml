@@ -26,6 +26,7 @@ jobs:
           unzip master.zip
       - name: make and install pigpio
         run: |
+          cd pigpio-master
           make
           sudo make install
       - name: echo include path
