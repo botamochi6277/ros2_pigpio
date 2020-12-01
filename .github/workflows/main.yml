@@ -28,9 +28,9 @@ jobs:
         run: |
           make
           sudo make install
-          # sudo ./x_pigpio # check C I/F
-        working_directory: pigpio-master
       - name: echo include path
         run: gcc -xc++ -E -v -
+      - name: echo pigpio path
+        run: ls /etc/pigpio*
       - uses: 'ros-industrial/industrial_ci@master'
         env: ${{matrix.env}}
