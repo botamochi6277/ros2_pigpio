@@ -40,7 +40,7 @@ public:
     {
       set_mode(pi_, pin_, PI_OUTPUT);
       std::stringstream ss;
-      ss << "gpio_pwm_" << std::setw(2) << pin_;
+      ss << "gpio_pwm_" << std::setfill('0') << std::right << std::setw(2) << pin_;
       subscription_ = this->create_subscription<std_msgs::msg::Int16>(
           ss.str(), 10, std::bind(&PWMWriter::topic_callback, this, _1));
     }

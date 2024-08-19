@@ -68,7 +68,7 @@ public:
         set_pull_up_down(pi_, pin_, PI_PUD_OFF);
       }
       std::stringstream ss;
-      ss << "gpio_input_" << std::setw(2) << pin_;
+      ss << "gpio_input_" << std::setfill('0') << std::right << std::setw(2) << pin_;
       publisher_ = this->create_publisher<std_msgs::msg::Bool>(ss.str(), 10);
       timer_ = this->create_wall_timer(
           500ms, std::bind(&DigitalReader::timer_callback, this));

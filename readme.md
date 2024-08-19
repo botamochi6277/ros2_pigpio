@@ -5,29 +5,39 @@ This package is tested with Raspberry Pi 4 Model B with Ubuntu 20.04 LTS and fox
 
 ## Install
 
-1. Install pigpio following official instruction
+1. Install pigpio following [official instruction](https://abyz.me.uk/rpi/pigpio/download.html)
 1. Download this repository in `<your ros2 workspace>/src`
-1. build this package
+1. build this package with `colcon build --packages-select ros2_pigpio`
 
+
+## Preparing
+
+```bash
+sudo pigpiod # run pigpio daemon
+cd <ros2_ws> # go to your ros2 workspace
+source install/local_setup.bash # install local setup
+```
 
 ## Read Input Pin
 
-To read inputted signal on GPIO-21 (PULL_UP), run a following command. 
+To read inputted signal on GPIO-21 (PULL_UP), run the following command. 
+A publisher will send read value of the pin.
 ```
 ros2 run ros2_pigpio gpio_reader --ros-args --param pin:=21
 ```
 
-You can set a input pin as pull-down as below, 
+You can set a input pin in pull-down with the below, 
 ```
 ros2 run ros2_pigpio gpio_reader --ros-args --param pin:=21 --param is_pull_up:=false
 ```
 
 ## Write Output Pin
-To write signal with GPIO-21, run a following command. 
+To write signal with GPIO-21, run a following command. A subscriber will wait for your inputs.
 ```
 ros2 run ros2_pigpio gpio_writer --ros-args --param pin:=21 
 ```
 
+When you submit a value to the subscriber, it write the signal on the pin. 
 Write high signal:
 ```
 ros2 topic pub --once gpio_output_21 std_msgs/msg/Bool '{data: true}'
